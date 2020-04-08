@@ -5,10 +5,9 @@
         <Label class="title" text="login!" col="1" />
       </GridLayout>
     </ActionBar>
-
-    <StackLayout>
-      <Button text="login" @tap="handleLogin" />
-    </StackLayout>
+    <GridLayout rows="*" columns="*">
+      <Button text="Click to Login" @tap="handleLogin" class="m-10" />
+    </GridLayout>
   </Page>
 </template>
 
@@ -52,7 +51,7 @@ export default {
             console.log("Result from Server: ", result);
             ApplicationSettings.setString("token", result.jwt);
 
-////////////////////////  PLEASE HELP            ////////////////////////
+            ////////////////////////  PLEASE HELP            ////////////////////////
             // HOW TO ADD HEADERS TO APOLLOCLIENT this.$apollo.provider.defaultClient
 
             // this.$apollo.provider.defaultClient({
@@ -65,8 +64,7 @@ export default {
             //   },
             // });
 
-//////////////////////// ////////////////////////////////////////////////
-
+            //////////////////////// ////////////////////////////////////////////////
           },
           (e) => {
             console.error(e);
