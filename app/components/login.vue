@@ -35,7 +35,8 @@ export default {
 
   methods: {
     handleLogin() {
-      ApplicationSettings.setString("token", JSON.stringify(""));
+      // first clean old token to start clean
+      ApplicationSettings.setString("token", "");
       request({
         url: "http://sebapi.com/auth/local",
         method: "POST",

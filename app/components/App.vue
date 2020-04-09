@@ -4,11 +4,12 @@
       <Label class="title" text="birds" col="1" />
     </ActionBar>
     <GridLayout rows="*,*" columns="*">
-      <ListView for="bird in birds" row="0" col="0">
+      <ListView for="bird in birds" row="0" col="0" class="m-20">
         <v-template>
-          <Label :text="bird.bilezik" />
-        </v-template> </ListView
-      ><Label
+          <Label :text="bird.isim" :key="bird.bilezik"  class="font-weight-bold p-b-15 text-center"/>
+        </v-template> 
+      </ListView>
+      <Label
         :text="'JWT in settings: ' + jwt"
         textWrap="true"
         row="1"
