@@ -1,23 +1,35 @@
 import Vue from "nativescript-vue";
 import login from "./components/login.vue";
-
+import * as ApplicationSettings from "tns-core-modules/application-settings";
 import VueDevtools from "nativescript-vue-devtools";
+import { setContext } from 'apollo-link-context'
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import ApolloClient from 'apollo-boost'
+import {ApolloClient ,InMemoryCache, HttpLink } from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 
 Vue.use(VueApollo)
+const httpLink = new HttpLink({
+  uri: `http://sebapi.com/graphql`
+});
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from ApplicationSettings if it exists
+  const token = ApplicationSettings.getString("token");
 
-const apolloClient = new ApolloClient({
-  uri: 'http://sebapi.com/graphql',
-
-// HEADERS WORK FINE IF TOKEN WAS IN MAIN
-  headers: {
-    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg2MzU2NzM2LCJleHAiOjE1ODg5NDg3MzZ9.wpyhPTWuqxrDgezDXJqIOaAIaocpM8Ehd3BhQUWKK5Q`,
-}
-
+  // return the headers to the context so HTTP link can read them
+  return {
+      headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : null
+      }
+  }
 })
+// update apollo client as below
+const apolloClient = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
+
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })

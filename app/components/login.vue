@@ -51,21 +51,8 @@ export default {
             const result = response.content.toJSON();
             console.log("Result from Server: ", result);
             ApplicationSettings.setString("token", result.jwt);
-
-            ////////////////////////  PLEASE HELP            ////////////////////////
-            // HOW TO ADD HEADERS TO APOLLOCLIENT this.$apollo.provider.defaultClient
-
-            // this.$apollo.provider.defaultClient({
-            //   request: (operation) => {
-            //     operation.setContext({
-            //       headers: {
-            //         authorization: `Bearer ${result.jwt}` ,
-            //       },
-            //     });
-            //   },
-            // });
-
-            //////////////////////// ////////////////////////////////////////////////
+            // const token = result.jwt; // Added by Varit J Patel
+            
           },
           (e) => {
             console.error(e);
