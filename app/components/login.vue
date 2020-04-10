@@ -50,9 +50,7 @@ export default {
           (response) => {
             const result = response.content.toJSON();
             console.log("Result from Server: ", result);
-            ApplicationSettings.setString("token", result.jwt);
-            // const token = result.jwt; // Added by Varit J Patel
-            
+            ApplicationSettings.setString("token", result.jwt);           
           },
           (e) => {
             console.error(e);
